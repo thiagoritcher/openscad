@@ -1,6 +1,6 @@
 include <lib/func.scad>
-include <lib/arcd.scad>
 include <lib/lin.scad>
+
 /**
 Project 
 Description
@@ -23,28 +23,25 @@ module build(){
 module parte(){
   //a:
   module a(){
-    r = 2; //radius
-    ra = 2; //second radius
-    w = 1; //width
-    fn=6;//number of points
-
-    s = darc_size(r, ra, w, fn);
-    n = 6;
-    tr(x=r + w)
-    linv(vecx, n, n*s, s)
-      tr(x = -s/2)
-      darc(r, ra, w, fn);
-
-    //darc(r, ra, w, fn);
-    square([n*s,1]);
+    linvs(vecx, n=5, spacing=10, width=10, first=5)
+      cube(size, center=true);
+    
+    
   }
   
   //b:
   module b(){
+    
+    tr(y=-1/2)
+    cube([100, 1, 1]);
   }
   
   //c:
   module c(){
+    #cylinder(h=10, r=5, center=true);
+    
+    translate(vec(x=linsv_size(n=5, spacing=10, width=10, first=5)))
+    #cylinder(h=10, r=5, center=true);
   }
   
   a();

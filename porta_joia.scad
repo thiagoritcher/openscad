@@ -2,32 +2,44 @@ include <lib/round.scad>
 
 build();
 
+// [Base]
 //base
-bx = 200;
-by = 30;
-bh = 4;
+bx = 240;
+//bx =80;
+by = 12;
+bh = 2.4;
+
+// [Suporte]
+//number
+sn = 15;
 
 //suporte
-sh = 20;
+sh = 12;
 sr0= 6;
 sh0 = 5;
-sr1 = 4;
-sr2 = 3;
+sr1 = 3;
+sr2 = 2;
 
-sn = 11;
+
 
 //furos
 fr = 2;
-fm = 10;
+fm = 6;
 
 //heart
-hs = .3;
+hs = .25;
 hh = 2;
+ht = 17;
 
 $fn=32;
 
+//reforco1
+re = 1.5;
+
 
 function heart_height(hs) = norm([hs*20, hs*20]);
+
+function heart_width(hs) = hs*18;
 
 module heart(s,h){
     module flat_heart(s) {
@@ -40,7 +52,7 @@ module heart(s,h){
       circle(s*10);
     }
     
-    translate([0,-s*18,0])
+    translate([0,-s*ht,0])
     rotate([0,0,45])
     linear_extrude(height = h) 
     flat_heart(s);
@@ -52,17 +64,33 @@ module suporte(){
     cylinder(sh, sr1, sr2);
     translate([0,0,sh])
     heart(hs, hh);
-    reforco(2);
+    //reforco(re);
+    reforco2();
 }
 
 module reforco(s){
+    h = sh*.8;
     rotate([90,0,-90])
-    linear_extrude(sr0*.4, center=true)
+    linear_extrude(s, center=true)
+    
     polygon([
         [0,0],
-        [0,sh],
-        [sr2*1.5,sh],
+        [0,h],
+        [sr2,h],
         [by/2 - s, 0]
+    ]);
+    
+}
+
+
+module reforco2(){
+    d = heart_width(hs);
+    #translate([0,0,sh])
+    rotate_extrude()
+    polygon([
+        [0,-d *.7],
+        [d *.7,0],
+        [0,0]
     ]);
     
 }
@@ -98,12 +126,35 @@ module suportes(){
     a();
 }
 
+module corte(){
+    nx = 3;
+    dx = bx / (2*nx  +1);
+    
+    module c(){
+      for(i = [0:nx]){
+            translate([i*dx,0,-bh/2])
+              cube([1,by,1], center=true);
+      }
+    }
+    difference(){
+      children();
+      
+      c();
+      mirror([1,0,0]) c();
+      
+      
+    } 
+      
+  
+}
+
 module build() {
     v = [bx, by, bh];
-    translate([0,4,0])
+    
     suportes();
+    corte()
     difference(){
-    round4corner(v, 8, bh + 1)
+    round4corner(v, 6, bh + 1)
     cube(v, true);
     furo();
     }
