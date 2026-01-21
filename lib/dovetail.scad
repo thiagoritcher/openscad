@@ -23,14 +23,14 @@ module lock(bth, top, height, ff=0){
     size = norm([(dovetop - dovebase)/2, doveheight]);
     
     bthl = [doveheight, top, height];
-    translate([dovebase/2,0,0])
+    translate([dovebase/2 + ff,0,0])
     difference(){
         rotate([0,-90, 180+ang])
         translate([0,0,size/2])
         dove(bthl, size, ff);
         
-        translate([0,-3*bthl[1]/2,0])
-        cube(bthl * 3, center=true);
+        translate([0,-10*bthl[1]/2,0])
+        cube(bthl * 10, center=true);
     }
 }
 
@@ -39,6 +39,17 @@ module dovelock(bth, size, top, height, ff){
     lock(bth,top,height, ff);
     mirror([1,0,0])
     lock(bth,top,height, ff);
+}
+
+module dovetail_demo(){
+  dove([8, 10, 3], 2);
+
+  translate([0,5,0])
+  dovelock([8, 10, 3], 3, .1, .9, 0);
+
+  translate([0,10,0])
+  dovelock([8, 10, 3], 3, .1, .9, .4);
+  
 }
 
 
