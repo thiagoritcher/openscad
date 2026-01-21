@@ -34,6 +34,8 @@ module miry(){
 }
 
 function vec(x=0,y=0,z=0) = [x, y, z];
+function vecc(src=[0,0,0], x=false,y=false,z=false) = 
+  [x ? x :src.x, y ? y : src.y, z ? z: src.z];
 
 vecx = [1, 0, 0];
 vecy = [0, 1, 0];
