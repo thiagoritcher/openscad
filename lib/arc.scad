@@ -26,3 +26,10 @@ module arc(radius, angles, width = 1, fn = 24) {
         sector(radius, angles, fn);
     }
 } 
+
+module arc_demo(){
+  sector(15, [0,30]);
+
+  translate([20,0,0])
+  arc(10, [0,45], 1.2, 24);
+}

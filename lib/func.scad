@@ -35,6 +35,7 @@ module miry(){
 
 function vec(x=0,y=0,z=0) = [x, y, z];
 
+//base vectors
 vecx = [1, 0, 0];
 vecy = [0, 1, 0];
 vecz = [0, 0, 1];

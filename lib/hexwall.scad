@@ -45,8 +45,12 @@ t2 = 2,
 h2 = 2,
 w =.6 
 ){
+
+  dx = b2 + 2*b2 - w;
+  tr(x=dx)
   hex_w(b2, t2, h2, w);
 
+  tr(x=dx)
   rot(z=-180)
   tr(x= hex_w_size(b2, t2, h2, w))
   hex_w(b2, t2, h2, w);
@@ -60,10 +64,17 @@ w =.6
 ) = hex_w_size(b2, t2, h2, w) *2;
 
 
-linear_extrude(100){
+module hexwall_demo(){
+  linear_extrude(5)
+  {
+    tr(x= -5 + .6)
+      square([10,.6], center=true);
 
-dhex_wall();
-tr(x=dhex_wall_size())
-dhex_wall();
-
+      dhex_wall();
+      tr(x=dhex_wall_size())
+      dhex_wall();
+    
+    tr(x= 5 + dhex_wall_size() * 2)
+      square([10,.6], center=true);
   }
+}
