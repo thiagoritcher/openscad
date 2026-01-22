@@ -58,5 +58,8 @@ function poly_rot(pts, ang) =
  * radv is a map of index to radius
  */
 function add_radius(pts, radv) = 
-  [for(i = [0:len(pts)])  [pts[i][0], pts[i][1], lookup(i, radv)]]
+  [for(i = [0:len(pts)]) 
+    let(sr = search(i, radv), 
+      rr = len(sr) > 0 ? sr[0][0] : 0) 
 
+    [pts[i][0], pts[i][1], rr]]
