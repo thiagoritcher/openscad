@@ -1,14 +1,13 @@
 include <lib/arc.scad>
 
 //suporte
-se=2;
+se=2.5;
 sl=15;
 sr = 100;
 
 
 //gancho
-gh=8;
-gr = 5;
+gr = 6;
 
 
 sl2 = sl/2;
@@ -25,12 +24,13 @@ module gancho(gr,se){
     ah = gr;
     bh = se/2;
     
-    rotate([0,0,15])
-    translate([se,ah + bh,0]) {
+    rotate([0,0,22])
+    translate([1,0,0])
+    translate([se,ah + bh +se -1,0]) {
         arc(gr - se,[-90, 160], se, fn=64);
         
-        translate([0,-se/2 - gr,0])
-        arc(se/2,[90, 200], se, fn=64);
+        translate([0,-se- gr,0])        
+        arc(se,[90, 200], se, fn=64);
     }
 }
 linear_extrude(se) {
