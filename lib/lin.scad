@@ -38,3 +38,13 @@ module lin_demo(){
   linv(n=5, size=10)
     cube([1,1,1], center=true);
 }
+
+
+module rotvs(dir= [0,0,1], angs=[0,90], n=4, radius=50){
+  da = (angs[1] - angs[0]) / n;
+  for(i = [0:n]){
+    rotate(i * da * dir)
+    translate([radius, 0, 0])
+      children();
+  }
+}

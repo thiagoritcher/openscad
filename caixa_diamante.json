@@ -1,0 +1,16 @@
+{
+    "parameterSets": {
+        "2": {
+            "bh": "1.2",
+            "hn": "3",
+            "rn": "6",
+            "tx": "4",
+            "ty": "8",
+            "tz": "2",
+            "w": "1.2",
+            "wn": "5"
+        }
+    },
+    "parameterSets": "",
+    "fileFormatVersion": "1"
+}

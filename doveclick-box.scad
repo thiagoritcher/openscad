@@ -11,23 +11,20 @@ Show = "flat"; // [flat, center, build, flat&center]
 spacing = 4; // [4:30]
 
 
-if(Show == "flat") flat(spacing);
-if(Show == "center") center(spacing);
-if(Show == "build") build();
-if(Show == "flat&center") build();
+
   
 
 /* [Box Size] */
 //box
-b = [110, 150, 60];
+b = [110, 150, 40];
 //espessura
 be=2.5; 
 
 /* [Centro] */
 //espessura centro
-ce=2; 
+ce=1.8; 
 //borda centro
-cb=0; 
+cb=0.0; 
 
 
 
@@ -86,6 +83,15 @@ lss = sqrt(pow(dh,2) + pow((dt-db)/2, 2));
 
 
 AA=.01;
+
+
+if(Show == "flat") flat(spacing);
+if(Show == "center") center(spacing);
+if(Show == "build") build();
+if(Show == "flat&center") 
+{
+  flat(spacing); center(spacing);
+}
 
 module side2(){
     base_form([by-2*dh, bh, be], bm, bm);
@@ -175,7 +181,7 @@ module mirrorx_line(t, n, v, tv){
         mirror(v)
         translate(i*t*tv)
         children();
-    }
+    } 
 }
 
 module base_form(v, bm, bb){
@@ -272,29 +278,47 @@ module flat(ma=10) {
 
 module build() {
     base();
+    center_form([bx, by, ce], bb, bb);
     
-    translate([0, -by/2,bh2+dh])
-    rotate([-90,0,0])
-    side1();
+    module bs1(){
+      translate([0, -by/2,bh2+dh])
+      rotate([-90,0,0])
+      {
+        side1();
+        center_s1(0);
+      }
+    }
     
-    translate([bx2, 0,bh2+dh])
-    rotate([-90,0,90])
-    side2();
+    module bs2(){
+      translate([bx2, 0,bh2+dh])
+      rotate([-90,0,90])
+      {
+        side2();
+        center_s2(0);
+      }
+    }
+    
+    bs1(); mirror([0,1,0]) bs1();
+    bs2(); mirror([1,0,0]) bs2();
+}
+
+module center_s1(ma){
+   center_form([bx, bh, ce], bb, bm);
+}
+
+module center_s2(ma){
+   center_form([by-2*dh, bh, ce], bm, bm);
 }
 
 module center(ma) {
     center_form([bx, by, ce], bb, bb);
-    module s1(){
-      flat_s1(ma) center_form([bx, bh, ce], bb, bm);
-    }
     
-    s1();
-    mirror([0,1,0]) s1();
     
-    module s2(){
-      flat_s2(ma) center_form([by-2*dh, bh, ce], bm, bm);
-    }
-    s2();
-    mirror([1,0,0]) s2();
+   flat_s1(ma) center_s1(ma);
+    mirror([0,1,0]) flat_s1(ma) center_s1(ma);
+    
+  
+    flat_s2(ma) center_s2(ma);
+    mirror([1,0,0]) flat_s2(ma) center_s2(ma);
 }
 
