@@ -4,7 +4,7 @@ include <lib/lin.scad>
 /**
 Project 
 Description
-Author
+Author  
 */
 
 
@@ -30,7 +30,7 @@ module parte(){
     c = 4.2;
     
     cube(d, center=true);
-    cube(, center=true);
+    cube(10, center=true);
     
     
   }

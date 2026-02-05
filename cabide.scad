@@ -2,12 +2,12 @@ include <lib/arc.scad>
 
 //suporte
 se=2;
-sl=15;
+sl=15; 
 sr = 100;
 
 
 //gancho
-gh=8;
+gh=8; 
 gr = 5;
 
 

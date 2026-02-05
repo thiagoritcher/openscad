@@ -2,18 +2,18 @@ include <lib/func.scad>
 include <lib/lin.scad>
 
 /**
-Project 
+Project  
 Description
 Author
 */
 
-build();
+build();   
 
 //parte
 size = [10,10,10];
 
-ph = .3;
-
+ph = .3; 
+ 
 
 module build(){
   parte();

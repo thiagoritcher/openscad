@@ -1,11 +1,11 @@
 radius = 20;
 angles = [10, 90];
 width = 2;
-fn = 24;
+fn = 24; 
 
 module sector(radius, angles, fn = 24) {
     r = radius / cos(180 / fn);
-    step = -360 / fn;
+    step = -360 / fn; 
 
     points = concat([[0, 0]],
         [for(a = [angles[0] : step : angles[1] - 360]) 

@@ -33,6 +33,17 @@ module miry(){
   mirror([0,1,0]) children();
 }
 
+module mir2(){
+  mirror([1,0,0]) children();
+  children();
+}
+
+module mir4(){
+  mir2() children();
+  mirror([0,1,0])
+  mir2() children();
+}
+
 function vec(x=0,y=0,z=0) = [x, y, z];
 function vecc(src=[0,0,0], x=false,y=false,z=false) = 
   [x ? x :src.x, y ? y : src.y, z ? z: src.z];
