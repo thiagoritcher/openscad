@@ -1,58 +1,87 @@
-//flat(4);
-//center_pattern(1, 4);
+/**
+Project 
+Description
+Author
+*/
 
-center(4);
+// what to show in 3d view
+Show = "flat"; // [flat, center, build, flat&center]
 
-//build();
+/* [Flat option] */
+spacing = 4; // [4:30]
 
+
+if(Show == "flat") flat(spacing);
+if(Show == "center") center(spacing);
+if(Show == "build") build();
+if(Show == "flat&center") build();
+  
+
+/* [Box Size] */
 //box
-bx=110;
-by=150;
-bh=60;
+b = [110, 150, 60];
+//espessura
+be=2.5; 
 
-be=2.5; //espessura
-bm=4; //margem
-bb=bm+be; //margem
+/* [Centro] */
+//espessura centro
+ce=2; 
+//borda centro
+cb=0; 
 
-ce=2; //espessura centro
 
 
-//number of doves
+/* [Margem] */
+
+//margem
+bm=4; 
+//margem vertical
+bb=bm+be; 
+
+
+/* [Doves] */
+//x doves
 nx=5;
+//y doves
 ny=5;
+//z doves
 nh=3;
 
-//Afastamento lateral
+//afastamento lateral xy
 bmarg = 20; //xy
+
+//afastamento lateral z
 bmargh = 16; //z
 
-//dove
+/* [Geometria Dove] */
 db=5; //base
 dt=6.5; //topo
 dh=be; //height
-dsup=4;
 
-//lock
-lh=be; //height
-lp=1.2; //profundidade
-ls=.4; //slack
-la=.2; //topo
+/* [Geometria Lock] */
 
-
-//dovebase
-dbb=20; //base
-dbt=20; //topo
-dbh=dh; //height
-dbd=3.6;
+//height
+lh=be; 
+//profundidade
+lp=1.2;
+//folga
+ls=.4; 
+//topo
+la=.2;
 
 
+/* [Hidden] */ 
+bx=b.x;
+by=b.y;
+bh=b.z;
 
-//variaveis
 bx2 = bx/2;
 by2 = by/2;
 bh2 = bh/2;
 ang = atan2(dh, (dt-db)/2);
 lss = sqrt(pow(dh,2) + pow((dt-db)/2, 2));
+
+
 
 
 
@@ -85,12 +114,6 @@ module side1(){
         rotate([0,0,90])
         dove(ls);
     }
-    /*
-    mirrorh()
-    translate([bx2,0,0])
-    rotate([0,0,90])
-    dovebase();
-    */
     
     
     t = (bx - bmarg) / (nx -1);
@@ -114,16 +137,6 @@ module base(){
         rotate([0,0,90])
         dove(ls);
     }
-    /*
-    mirrorx()
-    translate([0,-by2,0])
-    dovebase();
-    
-    mirrory()
-    translate([bx2,0,0])
-    rotate([0,0,90])
-    dovebase();
-    */
 }
 
 module mirrory(){
@@ -176,10 +189,10 @@ module base_form(v, bm, bb){
 
 module center_form(v, bm, bb){
     b = 2*bm;
-    bx = 2*bb;
+    cbx = 2*bb;
     
     translate([0,0,v[2]*1/2])
-    cube(v + [-b, -bx, +AA], center=true);
+    cube(v + [-b+cb, -cbx+cb, +AA], center=true);
 }
 
 
@@ -192,14 +205,6 @@ module dovesup(){
         translate([0,lh/2,-db/2])
         cube([db*2, lh, db], center=true);
     }
-    
-    
-    /*
-    translate([0,0,0])
-    rotate([90,0,-90])
-    linear_extrude(db, center=true)
-    polygon([[0,0], [0, dh], [dsup, 0]]);
-    */
 }
 
 
@@ -216,21 +221,6 @@ module dove(ff){
 }
 
 
-
-module dovebase(){
-    b = dbb/2;
-    c = dbt/2;
-    dh = dbh;
-    difference(){
-        
-        translate([0,dbd,0])
-        rotate([90,0,0])
-        linear_extrude(dbd)
-        polygon([[-b,0], [-c, dh], [c, dh], [b, 0]]);
-        
-        dove(ls);
-    }
-}
 
 module lockf(ff){
     b = lh/2;
@@ -252,23 +242,29 @@ module dovef(){
 
 
 module flat_s1(ma){
-    translate([0, -by2-bh2 - ma,be]) 
-    rotate([0,180,0])
+    translate([0, -by2-bh2 - ma,0]) 
     children();
 }
 module flat_s2(ma){
-    translate([bx2 + bh2 + ma, 0,be])
-    rotate([0,180,90])
+    translate([bx2 + bh2 + ma, 0,0])
+    rotate([0,0,90])
     children();
 }
 
 module flat(ma=10) {
     
     base();
-    flat_s1(ma) 
-      side1();
-    flat_s2(ma) 
-      side2();
+    
+    module s1(){
+      flat_s1(ma) side1();
+    }
+    
+    s1(); mirror([0,1,0]) s1();
+    
+    module s2(){
+      flat_s2(ma) side2();
+    }
+    s2(); mirror([1,0,0]) s2();
     
 }
 
@@ -288,37 +284,17 @@ module build() {
 
 module center(ma) {
     center_form([bx, by, ce], bb, bb);
-    flat_s1(ma) center_form([bx, bh, ce], bb, bm);
-    flat_s2(ma) center_form([by-2*dh, bh, ce], bm, bm);
+    module s1(){
+      flat_s1(ma) center_form([bx, bh, ce], bb, bm);
+    }
+    
+    s1();
+    mirror([0,1,0]) s1();
+    
+    module s2(){
+      flat_s2(ma) center_form([by-2*dh, bh, ce], bm, bm);
+    }
+    s2();
+    mirror([1,0,0]) s2();
 }
-
-module center_pattern(file, ma) {
-    pos = [0,-100,-50];
-  
-    texture(file,pos, 100) 
-      center_form([bx, by, ce], bb, bb);
-  
-    flat_s1(ma)
-      texture(file,pos, 100) 
-      center_form([bx, bh, ce], bb, bm);
-  
-    texture(file,pos, 100) 
-      flat_s2(ma) 
-      center_form([by-2*dh, bh, ce], bm, bm);
-}
-
-module texture(t, pos, e){
-  difference(){
-    children();
-    translate(pos)
-      
-    linear_extrude(e)
-      import(file = str("lib/patterns/", t, ".dxf"));
-  }
-}
-
-
-
-
-;
 
