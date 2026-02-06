@@ -7,6 +7,9 @@ Description: Caixa que usa textura piramidal em formato de diamante
 Author: Thiago Ritcher
 */
 
+box_wall();
+box_base();
+
 
 /* [Dimensoes] */
 //controle vertical
@@ -86,8 +89,19 @@ function radius(n, w) =
 
 
 radi = radius(rn, 2*tx);
+
+module rotvs(dir= [0,0,1], angs=[0,90], n=4, radius=50){
+  da = (angs[1] - angs[0]) / n;
+  for(i = [0:n]){
+    rotate(i * da * dir)
+    translate([radius, 0, 0])
+      children();
+  }
+}
+
+
 module rswall(){
-rotvs(dir=[0, 1, 0], n=rn, radius=radi)
+rotvs(dir=[0, 1, 0], n=rn, radius=radi, angs=[0,90])
 rotate([0,90,0])
 children();
 }
@@ -139,16 +153,17 @@ cube([radi*2 + (wn * tx * 2) *2 + 2 * tz,
 }
 
 
-
-translate([0,-ty,0])
-difference(){ 
-ww();
-union(){
-cww();
-
-translate([0,ty * (hn * 2 +1) ,0])
+module box_wall(){
+  translate([0,-ty,0])
+  difference(){ 
+  ww();
+  union(){
   cww();
-}
+
+  translate([0,ty * (hn * 2 +1) ,0])
+    cww();
+  }
+  }
 }
 
 
@@ -182,6 +197,7 @@ module srbase(rad){
   [r*cos(a), r*sin(a)]]);
 }
 
+module box_base(){
 mir4(){
 swall(wn+1)
 sbase(radi);
@@ -190,6 +206,9 @@ translate([wn*tx*2,bh,0])
 rotvs(dir=[0, 1, 0], n=rn, radius=0)
 srbase(-radi);
 }
+}
+
+
 
 
 

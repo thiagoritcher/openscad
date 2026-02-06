@@ -4,7 +4,7 @@ include <lib/lin.scad>
 /**
 Project 
 Description
-Author
+Author  
 */
 
 
@@ -25,7 +25,13 @@ module build(){
 //parte:
 module parte(){
   //a:
-  module a(s=.9){
+  module a(){
+    
+    d = [6.5, 10, .9];
+    c = 4.2;
+    
+    cube(d, center=true);
+    cube(10, center=true);
     
     d = [6.5, 10, s];
     c = vecc(d, x=4.2, y=8);

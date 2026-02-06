@@ -1,4 +1,4 @@
-r=4;
+r=4; 
 module line(dx, e, int=.2){
     nx = dx / (2*r-1);
     module a(d, y=0){

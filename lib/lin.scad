@@ -14,7 +14,7 @@ module linv(dir=[1,0,0], n=2, size=10, width=1, first=0, last=0){
 
 //put n children along dir leaving spacing between each and
 //leaving first as space before 
-module linvs(dir=[0,0,1], n=2, spacing=0, width=0, first=0){
+module linvs(dir=[1,0,0], n=2, spacing=0, width=0, first=0){
   vfirst = dir * first + dir*width/2;
   n1 = n-1;
   dx = spacing + width;
@@ -39,12 +39,18 @@ module lin_demo(){
     cube([1,1,1], center=true);
 }
 
-
-module rotvs(dir= [0,0,1], angs=[0,90], n=4, radius=50){
-  da = (angs[1] - angs[0]) / n;
+module linrot(angs=[0,90], axis=[0,0,1], n=5, radius=50){
+  ang = (angs[1] - angs[0])/n;
   for(i = [0:n]){
-    rotate(i * da * dir)
-    translate([radius, 0, 0])
-      children();
+    translate([      
+      radius * cos(i * ang + angs[0]),
+      radius * sin(i * ang + angs[0]),
+      0])
+    rotate(axis * (i * ang + angs[0]))
+    children();
   }
 }
+
+function nw_radius(n, w, ang=90) = 
+    sqrt( (w ^2) / (2 * (1 - cos(ang / n))));
+

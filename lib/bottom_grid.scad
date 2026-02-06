@@ -25,4 +25,9 @@ module bottom_grid(
   
 }
 
+module bottom_grid_demo(){
+bottom_grid()
+cube([200,200,1]);
+}
+bottom_grid_demo();
 

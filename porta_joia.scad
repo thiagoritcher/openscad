@@ -6,7 +6,7 @@ build();
 //base
 bx = 240;
 //bx =80;
-by = 12;
+by = 12; 
 bh = 2.4;
 
 // [Suporte]
