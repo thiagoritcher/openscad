@@ -2,6 +2,7 @@ include <lib/func.scad>
 include <lib/lin.scad>
 
 caixa();
+div();
 tampa();
 
 /* [Dimensoes] */
@@ -10,9 +11,9 @@ tampa();
 hh = 60;
 
 //blocos raio
-nr = 20;
+nr = 10; 
 //blocos x
-nw = 10;
+nw = 5;
 //blocos y
 nv = 10;
 
@@ -21,7 +22,7 @@ nv = 10;
 aba = 1;
 
 //Lock altura
-lh = 3;
+lh = 8;
 //Lock espessura
 le = 2;
 //Lock folga
@@ -40,10 +41,15 @@ w2 = .7;
 h = 1.2;
 
 //ajusta fechamento no raio
-angfix = .20;
+angfix = .50;
 
+
+dn = 2;
+dw = 1.2;
+dl=26;
 
 spacing = 2*(w1 + w2 + e) - angfix;
+
 
 
 x = [w1, w1 + e, w1 + w2 + e];
@@ -221,6 +227,20 @@ module caixa(){
 
     echo("Tamanho da caixa:", x=2*spacing*(nw-1), y=2*spacing*(nv-1), z=hh);
 }
+
+
+module div(){
+    module form(){
+        tr(y=-dw)
+        cube([ra+spacing*(nw-1)+h,dw, hh -lh]);
+    }
+    mir4()
+    
+    linv(n = dn, size=ra+spacing*(nv-1), width=dw, dir=[0,1,0], last=dl)
+    form();
+}
+
+
 
 
 

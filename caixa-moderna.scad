@@ -3,26 +3,41 @@ include <lib/arc.scad>
 caixa();
 //tampa();
 
-r = 58.91;
+na = 40;
+
+
+//r = 58.91;
+//r = 40;
+//r = 30;
+//r = 20.4;
+//r = 12.0;
+
 w=2.5;
 h = 2.5;
-n = 12;
+n = 0;
+
+r = radius(w, na);
+
 
 //hs = 0.9;
 hs = 1.4;
 
 nd = w*n;
 
-hh = 50;
+hh = 80;
 bh = 1.2;
 
 ts = 0;
+
+
+function radius(w, na) = 
+  w * na / PI;
 
 module a(r, d = 0) {
 
 ang = 90;
 aa = (360*w*2)/(2*PI*r);
-na = ang / aa;
+
 
 for(i = [0:na]) {
   iaa = i * aa;
