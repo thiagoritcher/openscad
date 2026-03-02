@@ -78,3 +78,4 @@ module hexwall_demo(){
       square([10,.6], center=true);
   }
 }
+//hexwall_demo();
