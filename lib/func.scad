@@ -33,6 +33,10 @@ module miry(){
   mirror([0,1,0]) children();
 }
 
+module mirz(){
+  mirror([0,0,1]) children();
+}
+
 module mir2(){
   mirror([1,0,0]) children();
   children();

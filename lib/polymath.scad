@@ -28,6 +28,10 @@ function poly_cicle(pts, start, dir) =
     pts[i % l]
   ];
 
+function reverse(lst) =
+  [for (i = [len(lst)-1:-1:0])
+      lst[i]];
+
 function sublist(pts, start, end) = 
   start >= end ? [] :
   [for(i = [start:end - 1]) pts[i]];
