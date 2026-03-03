@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg1065"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   sodipodi:docname="desenho2.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1067"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.74742565"
+     inkscape:cx="396.02602"
+     inkscape:cy="864.30002"
+     inkscape:window-width="1920"
+     inkscape:window-height="1011"
+     inkscape:window-x="0"
+     inkscape:window-y="32"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer4" />
+  <defs
+     id="defs1062" />
+  <g
+     inkscape:label="Camada 1"
+     inkscape:groupmode="layer"
+     id="layer1" />
+  <g
+     inkscape:groupmode="layer"
+     id="layer4"
+     inkscape:label="Camada 2">
+    <path
+       id="path1605"
+       style="fill:#ffff00;stroke:none;stroke-width:1"
+       d="M 0 155.92537 L 0 296.99996 L 51.624756 296.99996 C 60.926825 289.63688 68.287285 279.80925 72.302563 268.61926 C 73.402036 265.49645 74.306915 262.13389 74.908089 258.85965 C 76.983048 247.72852 76.190395 236.02849 72.420386 225.26687 C 70.10126 218.52615 66.341472 212.33839 61.688224 206.95739 C 57.666847 202.19346 53.111729 197.94683 48.985124 193.24299 C 46.043171 189.78801 43.570758 185.64051 43.279529 181.01066 C 42.87327 176.54126 43.346279 172.05081 43.147754 167.57375 C 43.143903 163.69098 43.140149 159.80815 43.136385 155.92537 L 0 155.92537 z " />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer5"
+     inkscape:label="Camada 3">
+    <path
+       style="fill:#333333;stroke:none;stroke-width:1"
+       d="m 38.162793,297 c 0,0 30.47499,-14.06599 30.47499,-50.04824 0,-40.75547 -32.919785,-42.14136 -32.919785,-67.38724 v -23.6392 H 0 V 297 Z"
+       id="path1603"
+       sodipodi:nodetypes="csscccc" />
+  </g>
+</svg>
