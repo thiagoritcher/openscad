@@ -41,6 +41,10 @@ module mir2(){
   mirror([1,0,0]) children();
   children();
 }
+module miry2(){
+  mirror([0,1,0]) children();
+  children();
+}
 
 module mir4(){
   mir2() children();

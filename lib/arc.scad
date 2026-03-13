@@ -3,6 +3,16 @@ angles = [10, 90];
 width = 2;
 fn = 24; 
 
+function arcd(radius, angles, fn = 24) =
+    let(
+        r = radius / cos(180 / fn),
+        step = -360 / fn)  
+        [for(a = [angles[0] : step : angles[1] - 360]) 
+            [r * cos(a), r * sin(a)]
+        ];
+    
+
+
 module sector(radius, angles, fn = 24) {
     r = radius / cos(180 / fn);
     step = -360 / fn; 
@@ -33,3 +43,5 @@ module arc_demo(){
   translate([20,0,0])
   arc(10, [0,45], 1.2, 24);
 }
+
+//arc_demo();

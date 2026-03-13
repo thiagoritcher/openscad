@@ -9,15 +9,15 @@ Author: Thiago Ritcher
 
 box_wall();
 box_base();
-
+dv(ee=1.2); 
 
 /* [Dimensoes] */
 //controle vertical
-hn = 3;
+hn = 6;
 //controle raio
-rn = 6;
+rn = 12;
 //controle central
-wn = 5;
+wn = 8;
 
 
 /* [Forma da piramide] */
@@ -31,7 +31,7 @@ tz = 1.5;
 
 /* [Espessuras] */
 //parede
-w = 0.9;
+w = 1.2;
 //fundo
 bh = 1.2;
 
@@ -207,6 +207,40 @@ rotvs(dir=[0, 1, 0], n=rn, radius=0)
 srbase(-radi);
 }
 }
+
+module dv(ee = .8, w = wn*tx*2, bs=7){
+
+    module dv_x(ww, bs){
+        dy = 2*ty *(hn - .5);
+        translate([0,dy/2- bs/2,0])
+        cube([ww, dy - bs, radi*2], center=true);
+    }
+
+    module dv_y(ww, bs){
+        dy = 2*ty *(hn - .5);
+        translate([0,dy/2 - bs/2,0])
+        cube([radi*2 + wn*ty*2, dy - bs, ww], center=true);
+    }
+    
+    module dvv_x(ww, x, bs){
+        translate([x,0,0])
+        dv_x(ww, bs);
+    }
+
+    dvv_x(ee, w, bs);
+    mir2()
+    dvv_x(ee, w, bs);
+
+    dv_x(ee, bs);
+
+
+    dv_y(ee, bs);
+
+}
+
+
+
+
 
 
 
