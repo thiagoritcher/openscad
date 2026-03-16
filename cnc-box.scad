@@ -2,29 +2,69 @@ include <lib/func.scad>
 include <lib/polymath.scad>
 include <lib/arc.scad>
 
-box= [300,400,100];
+
+//montar();
+plano();
+
+
+box= [200,200,100];
 esp=15;
-ecut=8;
+ecut=10;
 
 rad = 1.6;
-tabn=[5,7,1];
-tw = 30;
+tabn=[5,5,3];
+tw = 20;
 ff = 5;
 
 fg=.5;
 
 
-module ccut(x=esp, y=tw, r=rad){
+
+
+module plano(){
+mir2()
+tr(y = box.y/2 + box.z/2 + 2*rad + ecut,
+   x = -box.y/2 - 2*rad/2)
+brd2();
+
+mir2()
+tr(x = box.x/2 + box.z/2 + 2*rad + ecut)
+brd1();
+
+base();
+}
+
+//plano();
+
+module montar(){
+#base();
+
+mir2()
+tr(x=box.x/2 -ff ,
+    z = box.z/2 + esp + fg)
+rot(y = -90)
+brd1();
+    
+miry2()
+tr(y=box.y/2 -ff ,
+    z = box.z/2 + esp + fg)
+rot(x = 90)
+brd2();
+}
+
+
+
+module ccut(x=esp+ 2*fg, y=tw, r=rad){
     rh = norm([r,r])/2;
     tr(x=x/2-rh, y = y/2-rh)
     circle(r=r, $fn=24); 
 }
-module ccuto(x=esp, y=tw, r=rad){
+module ccuto(x=esp+ 2*fg, y=tw, r=rad){
     rh = norm([r,r])/2;
     tr(x=x/2-rh, y = y/2+rh)
     circle(r=r, $fn=24); 
 }
-module scut(x=esp, y=tw, r=rad){
+module scut(x=esp + 2*fg, y=tw, r=rad){
     square([x,y], center=true);
 }
 
@@ -65,6 +105,26 @@ module ycut( x=box.x, y=box.y, ny=tabn.y,  ee=esp){
    }
 }
 
+module zcut( x=box.x, y=box.y, z = box.z, 
+    ny=tabn.y, nz =tabn.z,  ee=esp){
+        
+   zn = ((nz- 1)/2);
+   sz = z/2 - tw/2 - ff;
+        
+   dz = sz/zn;
+   v = [x/2 - ee/2 - ff, 0];
+   if(nz == 1) {
+       trv(v) 
+         children();
+   }
+   else {
+       for(i = [0:(nz - 1)/2]){   
+           trv(v + [0, i*dz])
+           children();
+       }
+   }
+}
+
 module base(
     x=box.x, y=box.y, nx=tabn.x, ny=tabn.y, ee=esp, ff=ff
     ){
@@ -75,7 +135,7 @@ module base(
        linear_extrude(ee)
        square([x,y], center=true);
        
-       #tr(z=ee - ecut)
+       tr(z=ee - ecut)
        linear_extrude(ecut)
        mir4()
        union(){
@@ -86,12 +146,8 @@ module base(
    };
 }
 
-base();
-
-module brd1(x=box.z, y=box.y, ny=tabn.y, ee=ecut){
-    
-    
-    module yadd(){
+module yadd(x=box.z, y=box.y, z=box.z,
+    ny=tabn.y, nz=tabn.z, ee=ecut){
     yn = ((ny- 1)/2);
     sy = y/2 - tw/2 - ff;
         
@@ -103,19 +159,95 @@ module brd1(x=box.z, y=box.y, ny=tabn.y, ee=ecut){
        y = i*dy)
         children();
     } 
-   }
-    
-    linear_extrude(esp){
-    miry2()
-    yadd()
-    difference(){
-        #scut(x=ee, y=tw - fg*2);
-        miry2()
-        #ccuto(x=ee, y=tw - fg*2);
-    }
-    square([x,y], center=true);
-    };
 }
 
-tr(x = box.x/2 + box.z/2 + 2*rad + ecut)
-brd1();
+module zadd(x=box.z, y=box.y, z=box.z,
+    ny=tabn.y, nz=tabn.z, ee=ecut){
+    zn = ((nz- 1)/2);
+    sz = z/2 - tw/2 - ff;
+    
+    dz = sz/zn;
+    
+    if(nz == 1){
+        tr(y=y/2 + ee/2, x = 0)
+        rot(z=270)
+        children();
+    }
+    else {
+        for(i = [0:(nz - 1)/2]){   
+           tr(y=y/2+ee/2, x = i * dz)
+           rot(z=270)
+           children();
+        };  
+    }
+}
+
+module xadd(x=box.x, y=box.y, z=box.z,
+    nx = tabn.x, ny=tabn.y, nz=tabn.z, ee=ecut){
+        
+    xn = ((nx - 1)/2);
+    sx = x/2 - tw/2 - ff;
+        
+    dx = sx/xn;
+    
+    for(i = [0:(nx - 1)/2]){   
+       tr(
+       y = -z/2 - ee/2,
+       x = i*dx)
+        rot(z=90)
+        children();
+    } 
+}
+
+
+ module fing(ee=ecut){
+    difference(){
+        scut(x=ee, y=tw - fg*2);
+        miry2()
+        ccuto(x=ee, y=tw - fg*2);
+    }
+}
+
+module brd1(x=box.z, y=box.y, z=box.z,
+    ny=tabn.y, nz=tabn.z, ee=ecut){
+    
+    linear_extrude(esp){
+        miry2()
+        //mir4()
+        yadd()
+        fing();
+    };
+    
+    linear_extrude(esp){
+        mir4()
+        zadd(y=y - 2*(esp +fg))
+        fing();
+    };
+    
+    linear_extrude(esp){
+        square([x,y - 2*(esp +fg) ], center=true);
+    }
+}
+
+module brd2(x=box.x, y=box.z,
+    ny=tabn.y, nz=tabn.z, ee=ecut){
+        
+    linear_extrude(esp){
+        mir2()
+        //mir4()
+        xadd()
+        fing();
+    }
+    
+     difference(){
+       linear_extrude(esp)
+        square([x,y ], center=true);
+    
+        tr(z=esp - ee)
+        linear_extrude(ee)
+           mir4()
+           zcut() tcut();
+       
+    }
+}
+
