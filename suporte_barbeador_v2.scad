@@ -2,21 +2,25 @@ include <lib/func.scad>
 include <lib/polyround.scad>
 include <lib/textura_diamante.scad>
 
+bw=26;
+
+sw = 14;
+see=2.8;
 
 
-module base(h=20, w=30, r=5, ee=2){
+module base(h=20, w=bw, r=5, ee=2){
     mir2()
     linear_extrude(ee, center=true)
     polygon([[0,0],[0,h],[w-r, h], [w, h-r], [w, 0]]);
 }
 
-module suporte(w=9, h=20, r=5, r1=3, ee=2){
+module suporte(w=sw, h=20, r=5, r1=5, ee=see){
     //radiiPoints = [[0,0,0], [h-r, 0 ,0], [h, r,0]];
     radiiPoints=[
         [0,  r,  0],
         [r,  0,  2],
-        [h - r1, .01 ,  2     ],
-        [h,  r1,  2],
+        [h - r1, .01 ,  1     ],
+        [h,  r1,  1],
         //[15, 10, r2    ],
         //[17, 2,  rEnd  ]
     ];
@@ -31,7 +35,7 @@ module suporte(w=9, h=20, r=5, r1=3, ee=2){
     
 }
 
-module pos_suporte(w=30, w2=9){
+module pos_suporte(w=bw, w2=sw){
     translate([w-w2/2,0,0])
     rotate([0,-90,0])
     children();

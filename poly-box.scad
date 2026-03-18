@@ -1,7 +1,7 @@
 include <lib/polymath.scad>
 
-//caixa();
-tampa();
+caixa();
+//tampa();
 //divs();
 
 
@@ -9,25 +9,25 @@ tampa();
 /* [Dimensoes] */
 
 //altura
-hh=40;
+hh=90;
 
 //num curva
-nr = 10;
+nr = 14;
 
 //num x
-nl = 3;
+nl = 1;
 
 //num y
-nw = 7;
+nw = 8;
 
 
 
 /* [Espessuras caixa] */
 //esp. parede
-ew = .9;
+ew = 1.2;
 
 //esp. base;
-eb = .6;
+eb = 1.2;
 
 
 
@@ -36,7 +36,7 @@ eb = .6;
 et = .9;
 
 //tampa trava
-tl = 8;
+tl = +0;
 
 //tampa folga
 tf = ew + .4;
@@ -48,12 +48,12 @@ tr = 1.5;
 
 /* [Divisorias] */
 //esp divisoria
-dw = .9;
+dw = 2;
 
 //div quantidade x
-dnx = 3;
+dnx = 4;
 //div quantidade y
-dny = 3;
+dny = 2;
 
 
 /* [Forma parede] */

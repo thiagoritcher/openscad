@@ -7,13 +7,13 @@ include <lib/arc.scad>
 plano();
 
 
-box= [200,200,100];
-esp=15;
-ecut=10;
+box= [400,300,200];
+esp=6;
+ecut=4;
 
 rad = 1.6;
-tabn=[5,5,3];
-tw = 20;
+tabn=[9,5,5];
+tw = 22;
 ff = 5;
 
 fg=.5;
@@ -23,12 +23,12 @@ fg=.5;
 
 module plano(){
 mir2()
-tr(y = box.y/2 + box.z/2 + 2*rad + ecut,
-   x = -box.y/2 - 2*rad/2)
+tr(y = box.y/2 + box.z/2 + 2*rad + ecut + 1,
+   x = -box.x/2 - 2*rad/2 -1)
 brd2();
 
 mir2()
-tr(x = box.x/2 + box.z/2 + 2*rad + ecut)
+tr(x = box.x/2 + box.z/2 + 2*rad + ecut * 1 + 1)
 brd1();
 
 base();
@@ -37,21 +37,42 @@ base();
 //plano();
 
 module montar(){
-#base();
+base();
 
-mir2()
+#mir2()
 tr(x=box.x/2 -ff ,
     z = box.z/2 + esp + fg)
 rot(y = -90)
 brd1();
     
-miry2()
+#miry2()
 tr(y=box.y/2 -ff ,
     z = box.z/2 + esp + fg)
 rot(x = 90)
 brd2();
 }
 
+
+module brd1(x=box.z, y=box.y, z=box.z,
+    ny=tabn.y, nz=tabn.z, ee=ecut){
+    
+    linear_extrude(esp){
+        miry2()
+        //mir4()
+        yadd()
+        fing();
+    };
+    
+    linear_extrude(esp){
+        mir4()
+        zadd(y=y - 2*(ff + esp +fg))
+        fing();
+    };
+    
+    linear_extrude(esp){
+        square([x,y- 2*(ff + esp +fg)], center=true);
+    }
+}
 
 
 module ccut(x=esp+ 2*fg, y=tw, r=rad){
@@ -208,26 +229,7 @@ module xadd(x=box.x, y=box.y, z=box.z,
     }
 }
 
-module brd1(x=box.z, y=box.y, z=box.z,
-    ny=tabn.y, nz=tabn.z, ee=ecut){
-    
-    linear_extrude(esp){
-        miry2()
-        //mir4()
-        yadd()
-        fing();
-    };
-    
-    linear_extrude(esp){
-        mir4()
-        zadd(y=y - 2*(esp +fg))
-        fing();
-    };
-    
-    linear_extrude(esp){
-        square([x,y - 2*(esp +fg) ], center=true);
-    }
-}
+
 
 module brd2(x=box.x, y=box.z,
     ny=tabn.y, nz=tabn.z, ee=ecut){
