@@ -6,18 +6,20 @@ include <lib/arc.scad>
 //montar();
 plano();
 
+s = 2*15+2*5;
 
-box= [400,300,200];
-esp=6;
-ecut=4;
+box= [75+s, 55+s, 190];
+esp=15;
+ecut=9;
 
 rad = 1.6;
-tabn=[9,5,5];
-tw = 22;
+tabn=[3,3,5];
+tw = 15;
 ff = 5;
 
 fg=.5;
 
+//#cube([75, 55, 55], center=true);
 
 
 

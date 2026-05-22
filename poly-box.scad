@@ -1,59 +1,78 @@
 include <lib/polymath.scad>
 
-caixa();
-//tampa();
-//divs();
+//union(){ 
+//  caixa(); 
+//  divs();
+//}
+tampa();
+
 
 
 
 /* [Dimensoes] */
 
 //altura
-hh=90;
+hh=40;
 
 //num curva
-nr = 14;
+nr = 10;
 
 //num x
-nl = 1;
+nl = 4;
 
 //num y
-nw = 8;
+nw = 6;
 
+esph = 1.2;
+//esph = 0.8;
 
 
 /* [Espessuras caixa] */
 //esp. parede
-ew = 1.2;
+
+//ew = 0.8;
+ew = esph;
 
 //esp. base;
-eb = 1.2;
+eb = .8;
 
 
 
 /* [Tampa] */
 //esp. tampa
-et = .9;
+et = .8;
 
 //tampa trava
-tl = +0;
+tl = 8+0;
 
 //tampa folga
 tf = ew + .4;
 
 //tampa esp externa
-tr = 1.5;
+tr = 2.4;
 
 
 
 /* [Divisorias] */
 //esp divisoria
-dw = 2;
+dw = esph;
 
 //div quantidade x
-dnx = 4;
+dnx = 2;
 //div quantidade y
 dny = 2;
+
+//div habilita x
+dex = [
+  [0, 1, 1],
+  [1, 1, 1]
+];
+
+//div habilita y
+dey = [
+  [1],
+  [1]
+];
 
 
 /* [Forma parede] */
@@ -170,26 +189,50 @@ function sizey() =
 
 module divs(){
 
-module di(){
+module dc(){
+  dih = (hh - tl - et);
   s = sizey() / dnx;
-  dih = hh - tl - et;
+  
+  sx = sizex()+ 2*f.y;
   
   if(dnx > 1)
-  for(i = [1:dnx - 1])
-  translate([0,sizey()/2 - i*s,dih/2])
-  cube([sizex()+ 2*f.y,dw,dih], center=true);
+    for(i = [1:dnx - 1])
+      if(dex[0][i-1] == 1)
+      translate([0, sizey()/2 - i*s -dw/2,0])
+      cube([sx / 2,dw,dih], center=false);
     
+  if(dnx > 1)  
+    for(i = [1:dnx - 1])
+      if(dex[1][i-1] == 1)
+      mirror([1,0,0])
+      translate([0, sizey()/2 - i*s -dw/2,0])
+      cube([sx / 2,dw,dih], center=false);
+    
+    sy = sizex() / dny;
 
-  sy = sizex() / dny;
-
+  ssy = sizey() + 2*f.y;
+    
   if(dny > 1)
   for(i = [1:dny - 1])
-  translate([sizex()/2 - i*sy,0,dih/2])
-  cube([dw, sizey() + 2*f.y,dih], center=true);
+    if(dey[0][i-1] == 1)
+    translate([sizex()/2 - i*sy - dw/2,0,0])
+    
+    cube([dw, ssy/2,dih], center=false);
+  
+  if(dny > 1)
+  for(i = [1:dny - 1])
+    if(dey[1][i-1] == 1)
+    mirror([0,1,0])
+    translate([sizex()/2 - i*sy - dw/2,0,0])
+    cube([dw, ssy/2,dih], center=false);
+  
 }
 
+
+
+
 intersection(){
-  di();
+ dc();
   caixa_interior();
 }
   
@@ -249,7 +292,7 @@ module tampa(){
     linear_extrude(et + tr) 
       difference(){
         polygon(sq(formb(f.x, f.y), f));
-        offset(-f.y - ew) 
+        offset(-ew ) 
         polygon(sq(formb(f.x, f.y), f));    
         
       }
