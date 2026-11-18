@@ -4,20 +4,23 @@ include <lib/arc.scad>
 
 
 //montar();
+projection()
 plano();
 
-s = 2*15+2*5;
+esp=6;
 
-box= [75+s, 55+s, 190];
-esp=15;
-ecut=9;
+s = 2*esp+2*5;
 
-rad = 1.6;
-tabn=[3,3,5];
+box= [100+s, 150+s, 80];
+
+ecut=6;
+
+rad = 3.2/2;
+tabn=[3,5,3];
 tw = 15;
 ff = 5;
 
-fg=.5;
+fg=.55;
 
 //#cube([75, 55, 55], center=true);
 
